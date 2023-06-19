@@ -27,8 +27,6 @@ public class MapConfigurationValidatorTest
                 new ElementToSize(8, 1)
             }, 0, "&")});
     
-    
-    
     private static MapConfiguration? _badDimensionGrowthMapConfig = new MapConfiguration(1000, 0.5, 
         new List<MapElementConfiguration>() { 
             new MapElementConfiguration("#", "mountain", new[]
@@ -49,25 +47,6 @@ public class MapConfigurationValidatorTest
             {
                 new ElementToSize(8, 1)
             }, 0, "&")});
-    
-    private static MapConfiguration[] _badDimensionGrowth =
-    {
-        _correctMapConfig,
-        _badDimensionGrowthMapConfig,
-    };
-    
-    [Test]
-    public void Test_IsDimensionGrowthOk_WithCorrectInput()
-    {
-        MapConfiguration mapConfig = _correctMapConfig;
-        Assert.That(_mapConfigurationValidator.IsDimensionGrowthOk(mapConfig), Is.True);
-    }
-    [Test]
-    public void Test_IsDimensionGrowthOk_WithBadInput()
-    {
-        MapConfiguration mapConfig = _badDimensionGrowthMapConfig;
-        Assert.That(_mapConfigurationValidator.IsDimensionGrowthOk(mapConfig), Is.False);
-    }
     
     private static MapConfiguration? _badPreferredPlaceConfig = new MapConfiguration(1000, 0.5, 
         new List<MapElementConfiguration>() { 
@@ -90,19 +69,6 @@ public class MapConfigurationValidatorTest
                 new ElementToSize(8, 1)
             }, 0, "&")});
     
-    [Test]
-    public void Test_IsPreferredPlacementOk_WithCorrectInput()
-    {
-        MapConfiguration mapConfig = _correctMapConfig;
-        Assert.That(_mapConfigurationValidator.IsPreferredPlacementOk(mapConfig), Is.True);
-    }
-    [Test]
-    public void Test_IsPreferredPlacementOk_WithBadInput()
-    {
-        MapConfiguration mapConfig = _badPreferredPlaceConfig;
-        Assert.That(_mapConfigurationValidator.IsPreferredPlacementOk(mapConfig), Is.False);
-    }
-    
     private static MapConfiguration? _badSymbolAndNameConfig = new MapConfiguration(1000, 0.5, 
         new List<MapElementConfiguration>() { 
             new MapElementConfiguration("#", "mountain", new[]
@@ -124,19 +90,6 @@ public class MapConfigurationValidatorTest
                 new ElementToSize(8, 1)
             }, 0, "&")});
     
-    [Test]
-    public void Test_DoSymbolAndNameMatch_WithCorrectInput()
-    {
-        MapConfiguration mapConfig = _correctMapConfig;
-        Assert.That(_mapConfigurationValidator.DoSymbolAndNameMatch(mapConfig), Is.True);
-    }
-    [Test]
-    public void Test_DoSymbolAndNameMatch_WithBadInput()
-    {
-        MapConfiguration mapConfig = _badSymbolAndNameConfig;
-        Assert.That(_mapConfigurationValidator.DoSymbolAndNameMatch(mapConfig), Is.False);
-    }
-    
     private static MapConfiguration? _badSingleOrMultiDimensionConfig = new MapConfiguration(1000, 0.5, 
         new List<MapElementConfiguration>() { 
             new MapElementConfiguration("#", "mountain", new[]
@@ -157,19 +110,6 @@ public class MapConfigurationValidatorTest
             {
                 new ElementToSize(8, 20)
             }, 0, "&")});
-
-    [Test]
-    public void Test_SingleOrMultiDimensionalOk_WithCorrectInput()
-    {
-        MapConfiguration mapConfig = _correctMapConfig;
-        Assert.That(_mapConfigurationValidator.SingleOrMultiDimensionalOk(mapConfig), Is.True);
-    }
-    [Test]
-    public void Test_SingleOrMultiDimensionalOk_WithBadInput()
-    {
-        MapConfiguration mapConfig = _badSingleOrMultiDimensionConfig;
-        Assert.That(_mapConfigurationValidator.SingleOrMultiDimensionalOk(mapConfig), Is.False);
-    }
     
     private static MapConfiguration? _badNumberOfElementsConfig = new MapConfiguration(1000, 0.5, 
         new List<MapElementConfiguration>() { 
@@ -191,6 +131,58 @@ public class MapConfigurationValidatorTest
             {
                 new ElementToSize(800, 1)
             }, 0, "&")});
+    
+    [Test]
+    public void Test_IsDimensionGrowthOk_WithCorrectInput()
+    {
+        MapConfiguration mapConfig = _correctMapConfig;
+        Assert.That(_mapConfigurationValidator.IsDimensionGrowthOk(mapConfig), Is.True);
+    }
+    [Test]
+    public void Test_IsDimensionGrowthOk_WithBadInput()
+    {
+        MapConfiguration mapConfig = _badDimensionGrowthMapConfig;
+        Assert.That(_mapConfigurationValidator.IsDimensionGrowthOk(mapConfig), Is.False);
+    }
+    
+    [Test]
+    public void Test_IsPreferredPlacementOk_WithCorrectInput()
+    {
+        MapConfiguration mapConfig = _correctMapConfig;
+        Assert.That(_mapConfigurationValidator.IsPreferredPlacementOk(mapConfig), Is.True);
+    }
+    [Test]
+    public void Test_IsPreferredPlacementOk_WithBadInput()
+    {
+        MapConfiguration mapConfig = _badPreferredPlaceConfig;
+        Assert.That(_mapConfigurationValidator.IsPreferredPlacementOk(mapConfig), Is.False);
+    }
+    
+    [Test]
+    public void Test_DoSymbolAndNameMatch_WithCorrectInput()
+    {
+        MapConfiguration mapConfig = _correctMapConfig;
+        Assert.That(_mapConfigurationValidator.DoSymbolAndNameMatch(mapConfig), Is.True);
+    }
+    [Test]
+    public void Test_DoSymbolAndNameMatch_WithBadInput()
+    {
+        MapConfiguration mapConfig = _badSymbolAndNameConfig;
+        Assert.That(_mapConfigurationValidator.DoSymbolAndNameMatch(mapConfig), Is.False);
+    }
+    
+    [Test]
+    public void Test_SingleOrMultiDimensionalOk_WithCorrectInput()
+    {
+        MapConfiguration mapConfig = _correctMapConfig;
+        Assert.That(_mapConfigurationValidator.SingleOrMultiDimensionalOk(mapConfig), Is.True);
+    }
+    [Test]
+    public void Test_SingleOrMultiDimensionalOk_WithBadInput()
+    {
+        MapConfiguration mapConfig = _badSingleOrMultiDimensionConfig;
+        Assert.That(_mapConfigurationValidator.SingleOrMultiDimensionalOk(mapConfig), Is.False);
+    }
     
     [Test]
     public void Test_TotalNumberOfElementsOk_WithCorrectInput()

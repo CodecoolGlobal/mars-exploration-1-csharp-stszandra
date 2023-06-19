@@ -106,8 +106,10 @@ public class MapConfigurationValidator : IMapConfigurationValidator
         if (TotalNumberOfElements >
             mapConfig.MapSize / ((mapConfig.ElementToSpaceRatio + 1) / mapConfig.ElementToSpaceRatio))
         {
+            TotalNumberOfElements = 0;
             return false;
         }
+        TotalNumberOfElements = 0;
         return true;
     }
 }

@@ -9,35 +9,64 @@ public class MapConfigurationValidator : IMapConfigurationValidator
     
     public bool Validate(MapConfiguration mapConfig)
     {
-        bool isMapConfigValid = true;
-        int totalNumberOfElements = 0;
+        return IsDimensionGrowthOk(mapConfig) && IsPreferredPlacementOk(mapConfig) && DoSymbolAndNameMatch(mapConfig) &&
+               SingleOrMultiDimensionalOk(mapConfig) && TotalNumberOfElementsOk(mapConfig);
+    }
+
+    public bool IsDimensionGrowthOk(MapConfiguration mapConfig)
+    {
         foreach (MapElementConfiguration config in mapConfig.MapElementConfigurations)
         {
-            //Is dimension growth OK?
             if (config.Name == "mountain" && config.DimensionGrowth != 3
                 || config.Name == "pit" && config.DimensionGrowth != 10
                 || config.Name == "mineral" && config.DimensionGrowth != 1
                 || config.Name == "water" && config.DimensionGrowth != 1)
             {
-                isMapConfigValid = false;
+                return false;
             }
-            //Preferred placement OK?
+        }
+
+        return true;
+    }
+
+    public bool IsPreferredPlacementOk(MapConfiguration mapConfig)
+    {
+        foreach (MapElementConfiguration config in mapConfig.MapElementConfigurations)
+        {
             if (config.Name == "mountain" && config.PreferredLocationSymbol != null
                 || config.Name == "pit" && config.PreferredLocationSymbol != null
                 || config.Name == "mineral" && config.PreferredLocationSymbol != "#"
                 || config.Name == "water" && config.PreferredLocationSymbol != "&")
             {
-                isMapConfigValid = false;
+                return false;
             }
-            //Do Symbol and Name match?
+        }
+
+        return true;
+       
+    }
+
+    public bool DoSymbolAndNameMatch(MapConfiguration mapConfig)
+    {
+        foreach (MapElementConfiguration config in mapConfig.MapElementConfigurations)
+        {
             if (config.Name == "mountain" && config.Symbol != "#"
                 || config.Name == "pit" && config.Symbol != "&"
                 || config.Name == "mineral" && config.Symbol != "%"
                 || config.Name == "water" && config.Symbol != "*")
             {
-                isMapConfigValid = false;
+                return false;
             }
-            //Single or Multidimensional correctly chosen?
+        }
+
+        return true;
+
+    }
+
+    public bool SingleOrMultiDimensionalOk(MapConfiguration mapConfig)
+    {
+        foreach (MapElementConfiguration config in mapConfig.MapElementConfigurations)
+        {
             foreach (ElementToSize elementToSize in config.ElementsToDimensions)
             {
                 if (config.Name == "mountain" && elementToSize.Size <= 1
@@ -45,10 +74,17 @@ public class MapConfigurationValidator : IMapConfigurationValidator
                     || config.Name == "mineral" && (elementToSize.Size < 1 || elementToSize.Size > 1)
                     || config.Name == "water" && (elementToSize.Size < 1 || elementToSize.Size > 1))
                 {
-                    isMapConfigValid = false;
+                    return  false;
                 }
             }
-            //Total number of elements not greater than the defined ElementToSpaceRatio?    
+        }
+        return true;
+    }
+
+    public bool TotalNumberOfElementsOk(MapConfiguration mapConfig)
+    {
+        foreach (MapElementConfiguration config in mapConfig.MapElementConfigurations)
+        {
             foreach (ElementToSize elementToSize in config.ElementsToDimensions)
             {
                 TotalNumberOfElements += elementToSize.ElementCount * elementToSize.Size;
@@ -65,9 +101,8 @@ public class MapConfigurationValidator : IMapConfigurationValidator
         if (TotalNumberOfElements >
             mapConfig.MapSize / ((mapConfig.ElementToSpaceRatio + 1) / mapConfig.ElementToSpaceRatio))
         {
-            isMapConfigValid = false;
+            return false;
         }
-        return isMapConfigValid;
+        return true;
     }
-    
 }

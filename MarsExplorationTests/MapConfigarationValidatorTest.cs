@@ -3,6 +3,7 @@ using Codecool.MarsExploration.Configuration.Service;
 
 namespace MarsExplorationTests;
 
+[TestFixture]
 public class MapConfigurationValidatorTest
 {
     private readonly IMapConfigurationValidator _mapConfigurationValidator = new MapConfigurationValidator();

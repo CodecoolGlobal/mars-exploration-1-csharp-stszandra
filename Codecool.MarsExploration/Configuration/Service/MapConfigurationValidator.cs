@@ -5,7 +5,12 @@ namespace Codecool.MarsExploration.Configuration.Service;
 
 public class MapConfigurationValidator : IMapConfigurationValidator
 {
-    private int TotalNumberOfElements { get; set; } = 0;
+    private int TotalNumberOfElements { get; set; }
+
+    public MapConfigurationValidator()
+    {
+        TotalNumberOfElements = 0;
+    }
     
     public bool Validate(MapConfiguration mapConfig)
     {
@@ -19,8 +24,8 @@ public class MapConfigurationValidator : IMapConfigurationValidator
         {
             if (config.Name == "mountain" && config.DimensionGrowth != 3
                 || config.Name == "pit" && config.DimensionGrowth != 10
-                || config.Name == "mineral" && config.DimensionGrowth != 1
-                || config.Name == "water" && config.DimensionGrowth != 1)
+                || config.Name == "mineral" && config.DimensionGrowth != 0
+                || config.Name == "water" && config.DimensionGrowth != 0)
             {
                 return false;
             }

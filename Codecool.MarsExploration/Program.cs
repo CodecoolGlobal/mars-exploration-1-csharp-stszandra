@@ -66,7 +66,7 @@ internal class Program
             new ElementToSize(8, 1)
         }, 0, pitSymbol);
         
-        List<MapElementConfiguration> elementsCfg = new() { mountainsCfg };
+        List<MapElementConfiguration> elementsCfg = new() { mountainsCfg, pitCfg, mineralCfg, waterCfg };
         return new MapConfiguration(1000, 0.5, elementsCfg);
     }
 }

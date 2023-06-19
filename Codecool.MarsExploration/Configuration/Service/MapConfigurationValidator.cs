@@ -95,16 +95,10 @@ public class MapConfigurationValidator : IMapConfigurationValidator
                 TotalNumberOfElements += elementToSize.ElementCount * elementToSize.Size;
             }
         }
-        //mapConfig.MapSize = elements + spaces
-        //elements = spaces * ratio
-        //spaces = elements / ratio
-        //mapConfig.MapSize = elements + elements / ratio
-        //mapConfig.MapSize = elements (1 + 1/ratio)
-        //mapConfig.MapSize = elements (ratio/ratio + 1/ratio)
-        //mapConfig.MapSize = elements ((ratio + 1) / ratio)
-        //elements = mapConfig.MapSize / ((ratio + 1) / ratio)
-        if (TotalNumberOfElements >
-            mapConfig.MapSize / ((mapConfig.ElementToSpaceRatio + 1) / mapConfig.ElementToSpaceRatio))
+
+        double actualNumberOfSpaces = mapConfig.MapSize - TotalNumberOfElements;
+        double requiredNumberOfSpaces = TotalNumberOfElements / mapConfig.ElementToSpaceRatio;
+        if (requiredNumberOfSpaces > actualNumberOfSpaces)
         {
             TotalNumberOfElements = 0;
             return false;

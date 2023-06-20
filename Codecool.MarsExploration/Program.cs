@@ -4,6 +4,7 @@ using Codecool.MarsExploration.Configuration.Service;
 using Codecool.MarsExploration.MapElements.Service.Builder;
 using Codecool.MarsExploration.MapElements.Service.Generator;
 using Codecool.MarsExploration.MapElements.Service.Placer;
+using Codecool.MarsExploration.MapElements.Model;
 using Codecool.MarsExploration.Output.Service;
 
 internal class Program
@@ -30,6 +31,16 @@ internal class Program
         CreateAndWriteMaps(3, mapGenerator, mapConfig);
 
         Console.WriteLine("Mars maps successfully generated.");
+
+        string filePath = WorkDir + "map.txt";
+        IMapFileWriter mapFileWriter = new MapFileWriter();
+        string?[,] representation = new string?[3, 3];
+        bool successfullyGenerated = true;
+        Map map = new Map(representation, successfullyGenerated);
+       //                        itt még kell maga a map változó
+          mapFileWriter.WriteMapFile(map, filePath);
+        Console.WriteLine("Map file created succesfully.");
+
         Console.ReadKey();
     }
 

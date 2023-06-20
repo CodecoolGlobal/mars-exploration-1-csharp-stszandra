@@ -16,10 +16,12 @@ public class CoordinateCalculatorTest
         new object[] {30}
     };
     
-    private static readonly object[] TestCases2 =
+    private static readonly object[] TestCorners =
     {
-        new object[] {new Coordinate(0,0), 2, new List<Coordinate>{new Coordinate(1, 0), new Coordinate(0, 1)}},
-        new object[] {new Coordinate(0,2), 3, new List<Coordinate>{new Coordinate(0, 1), new Coordinate(1, 2)}},
+        new object[] {new Coordinate(0,0), 2, new List<Coordinate>() { new Coordinate(1, 0), new Coordinate(0, 1) }},
+        new object[] {new Coordinate(1,0), 2, new List<Coordinate>() { new Coordinate(0, 0), new Coordinate(1, 1) }},
+        new object[] {new Coordinate(0,1), 2, new List<Coordinate>() { new Coordinate(0, 0), new Coordinate(1, 1) }},
+        new object[] {new Coordinate(1,1), 2, new List<Coordinate>() { new Coordinate(0, 1), new Coordinate(1, 0) }},
     };
     
     private static readonly object[] TestCases3 =
@@ -46,10 +48,10 @@ public class CoordinateCalculatorTest
         Assert.That(generatedCoordinate.X >= 0 && generatedCoordinate.X < dimension && generatedCoordinate.Y >= 0 && generatedCoordinate.Y < dimension);
     }
 
-    [TestCaseSource(nameof(TestCases2))]
-    public void Test_GetAdjacentCoordinates1_Corner(Coordinate coordinate, int dimension, IEnumerable<Coordinate> expectedResult)
+    [TestCaseSource(nameof(TestCorners))]
+    public void Test_GetAdjacentCoordinates1_Corner(Coordinate coordinate, int dimension, List<Coordinate> neighbors)
     {
-        Assert.That(expectedResult.Equals((IEnumerable<Coordinate>)_coordinateCalculator.GetAdjacentCoordinates(coordinate, dimension)));
+        Assert.That(_coordinateCalculator.GetAdjacentCoordinates(coordinate, dimension).Intersect(neighbors).Count() == 2);
     }
     
     // [TestCaseSource(nameof(TestCases3))]

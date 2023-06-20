@@ -26,12 +26,12 @@ public class CoordinateCalculator : ICoordinateCalculator
             rightNeighbour = coordinate with {X = coordinate.X - 1};
         }
         Coordinate topNeighbour = null;
-        if (coordinate.X != 0)
+        if (coordinate.Y != 0)
         {
             topNeighbour = coordinate with {Y = coordinate.Y - 1};
         }
         Coordinate bottomNeighbour = null;
-        if (coordinate.X != 0)
+        if (coordinate.Y != dimension - 1)
         {
             bottomNeighbour = coordinate with {Y = coordinate.Y + 1};
         }

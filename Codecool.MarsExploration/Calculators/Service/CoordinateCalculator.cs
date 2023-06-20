@@ -60,6 +60,14 @@ public class CoordinateCalculator : ICoordinateCalculator
 
     public IEnumerable<Coordinate> GetAdjacentCoordinates(IEnumerable<Coordinate> coordinates, int dimension)
     {
-        
+        List<Coordinate> adjacentCoordinates = new List<Coordinate>();
+
+        foreach (Coordinate coordinate in coordinates)
+        {
+            adjacentCoordinates.AddRange(GetAdjacentCoordinates(coordinate, dimension).Except(adjacentCoordinates));
+            
+        }
+
+        return adjacentCoordinates;
     }
 }

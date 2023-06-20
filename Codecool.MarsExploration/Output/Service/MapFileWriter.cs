@@ -14,13 +14,12 @@ namespace Codecool.MarsExploration.Output.Service
         {
             try
             {
-                using StreamWriter writer = File.AppendText(file);
+                using StreamWriter writer = File.CreateText(file);
                 writer.WriteLine(map);
                 Console.WriteLine($"File succesfully written to file: {file}\n");
             }
             catch (IOException exception)
             {
-
                 Console.WriteLine($"Error - Couldn't write to file {file}: ");
                 Console.WriteLine($"{exception.Message}\n");
             }

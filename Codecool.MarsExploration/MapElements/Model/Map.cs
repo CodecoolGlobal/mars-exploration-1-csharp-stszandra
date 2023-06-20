@@ -9,19 +9,18 @@
             int rows = arr.GetLength(0);
             int cols = arr.GetLength(1);
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
 
             for (int i = 0; i < rows; i++) 
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    string element = arr[i, j] ?? "null";
-                    sb.Append(element);
-                    sb.Append(' ');
+                    string element = arr[i, j] ?? " ";
+                    stringBuilder.Append(element);
                 }
-                sb.AppendLine();
+                stringBuilder.AppendLine();
             }
-            return sb.ToString();
+            return stringBuilder.ToString();
         }
 
         public override string ToString()

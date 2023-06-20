@@ -34,6 +34,11 @@ public class CoordinateCalculatorTest
     {
         new object[] {new Coordinate(1,1), 3, new List<Coordinate>() { new Coordinate(1, 0), new Coordinate(1, 2), new Coordinate(0, 1), new Coordinate(2, 1) }},
     };
+    
+    private static readonly object[] NeighborsToMultipleCoordinates =
+    {
+        new object[] {new List<Coordinate>(){ new Coordinate(0, 0), new Coordinate(1, 1), new Coordinate(2, 2) }, 5, new List<Coordinate>() { new Coordinate(1, 0), new Coordinate(0, 1), new Coordinate(2, 1), new Coordinate(1, 2), new Coordinate(3, 2), new Coordinate(2, 3) }},
+    };
 
     [TestCaseSource(nameof(DimensionsForRandomCoordinates))]
     public void Test_GetRandomCoordinate(int dimension)
@@ -59,5 +64,12 @@ public class CoordinateCalculatorTest
     public void Test_GetAdjacentCoordinates1_Middle(Coordinate coordinate, int dimension, List<Coordinate> neighbors)
     {
         Assert.That(_coordinateCalculator.GetAdjacentCoordinates(coordinate, dimension).Intersect(neighbors).Count() == 4);
+    }
+
+    [TestCaseSource(nameof(NeighborsToMultipleCoordinates))]
+    public void Test_GetAdjacentCoordinates2(List<Coordinate> coordinates, int dimension, List<Coordinate> neighbors)
+    {
+        var calculatedNeighbors = _coordinateCalculator.GetAdjacentCoordinates(coordinates, dimension);
+        Assert.That(calculatedNeighbors.Except(neighbors).Count().Equals(neighbors.Except(calculatedNeighbors).Count()));
     }
 }

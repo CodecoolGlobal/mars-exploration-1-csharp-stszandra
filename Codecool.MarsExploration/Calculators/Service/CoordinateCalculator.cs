@@ -42,8 +42,8 @@ public class CoordinateCalculator : ICoordinateCalculator
 
         foreach (Coordinate coordinate in coordinates)
         {
+            //Adds the neighbours to the list if they aren't already in it.
             adjacentCoordinates.AddRange(GetAdjacentCoordinates(coordinate, dimension).Except(adjacentCoordinates));
-            
         }
 
         return adjacentCoordinates;

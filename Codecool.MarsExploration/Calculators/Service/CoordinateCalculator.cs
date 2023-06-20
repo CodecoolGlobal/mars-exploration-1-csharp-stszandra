@@ -7,8 +7,8 @@ public class CoordinateCalculator : ICoordinateCalculator
     public Coordinate GetRandomCoordinate(int dimension)
     {
         Random random = new Random();
-        int randomXCoordinate = random.Next(0, dimension + 1);
-        int randomYCoordinate = random.Next(0, dimension + 1);
+        int randomXCoordinate = random.Next(0, dimension);
+        int randomYCoordinate = random.Next(0, dimension);
         Coordinate coordinate = new Coordinate(randomXCoordinate, randomYCoordinate);
         return coordinate;
     }

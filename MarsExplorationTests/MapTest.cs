@@ -12,10 +12,14 @@ namespace MarsExplorationTests
         [Test]
         public void CreateStringRepresentation_Should_Return_Correct_String()
         {
+            // Arrange
             string?[,] representation = new string?[2, 2] { { "A", "B" }, { "C", "D" } };
             Map map = new Map(representation);
-            
+
+            // Act
             string result = map.ToString();
+
+            // Assert
             string expected = "A B \nC D \n";
 
             Assert.That(expected, Is.EqualTo(result));
@@ -23,12 +27,16 @@ namespace MarsExplorationTests
         [Test]
         public void CreateStringRepresentation_Should_Handle_Null_Values()
         {
+            // Arrange
             string?[,] representation = new string?[2, 2] { { null, "B" }, { "C", null } };
             Map map = new Map(representation);
 
+            // Act
             string result = map.ToString();
             string expected = "null B \nC null \n";
 
+            // Assert
+            string expected = "null B \nC null \n";
             Assert.That(expected,Is.EqualTo(result));
         }
     }

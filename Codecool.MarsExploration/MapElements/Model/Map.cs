@@ -15,10 +15,11 @@
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    string element = arr[i, j] ?? " ";
+                    string element = arr[i, j] ?? "null";
                     stringBuilder.Append(element);
+                    stringBuilder.Append(' ');
                 }
-                stringBuilder.AppendLine();
+                stringBuilder.Append("\n");
             }
             return stringBuilder.ToString();
         }

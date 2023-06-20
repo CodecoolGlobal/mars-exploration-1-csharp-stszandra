@@ -37,7 +37,6 @@ internal class Program
         string?[,] representation = new string?[3, 3];
         bool successfullyGenerated = true;
         Map map = new Map(representation, successfullyGenerated);
-       //                        itt még kell maga a map változó
           mapFileWriter.WriteMapFile(map, filePath);
         Console.WriteLine("Map file created succesfully.");
 

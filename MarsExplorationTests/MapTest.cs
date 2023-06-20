@@ -16,7 +16,7 @@ namespace MarsExplorationTests
             Map map = new Map(representation);
 
             string result = map.ToString();
-            string expected = "A B \nC D \n";
+            string expected = "AB\nCD\n";
 
             Assert.That(expected, Is.EqualTo(result));
         }
@@ -27,7 +27,7 @@ namespace MarsExplorationTests
             Map map = new Map(representation);
  
             string result = map.ToString();
-            string expected = "null B \nC null \n";
+            string expected = " B\nC \n";
 
             Assert.That(expected,Is.EqualTo(result));
         }

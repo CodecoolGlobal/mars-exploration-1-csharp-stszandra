@@ -15,9 +15,8 @@
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    string element = arr[i, j] ?? "null";
+                    string element = arr[i, j] ?? " ";
                     stringBuilder.Append(element);
-                    stringBuilder.Append(' ');
                 }
                 stringBuilder.Append("\n");
             }

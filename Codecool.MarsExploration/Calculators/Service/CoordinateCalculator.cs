@@ -23,7 +23,7 @@ public class CoordinateCalculator : ICoordinateCalculator
         Coordinate leftNeighbour = null;
         if (coordinate.X != 0)
         {
-            rightNeighbour = coordinate with {X = coordinate.X - 1};
+            leftNeighbour = coordinate with {X = coordinate.X - 1};
         }
         Coordinate topNeighbour = null;
         if (coordinate.Y != 0)

@@ -18,7 +18,7 @@
                     string element = arr[i, j] ?? " ";
                     stringBuilder.Append(element);
                 }
-                stringBuilder.AppendLine();
+                stringBuilder.Append("\n");
             }
             return stringBuilder.ToString();
         }

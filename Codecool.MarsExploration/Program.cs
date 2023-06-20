@@ -4,6 +4,7 @@ using Codecool.MarsExploration.Configuration.Service;
 using Codecool.MarsExploration.MapElements.Service.Builder;
 using Codecool.MarsExploration.MapElements.Service.Generator;
 using Codecool.MarsExploration.MapElements.Service.Placer;
+using Codecool.MarsExploration.MapElements.Model;
 using Codecool.MarsExploration.Output.Service;
 
 internal class Program

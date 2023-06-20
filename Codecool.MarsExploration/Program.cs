@@ -17,10 +17,10 @@ internal class Program
         Console.WriteLine("Mars Exploration Sprint 1");
         var mapConfig = GetConfiguration();
 
-        IDimensionCalculator dimensionCalculator = null;
-        ICoordinateCalculator coordinateCalculator = null;
+        IDimensionCalculator dimensionCalculator = new DimensionCalculator();
+        ICoordinateCalculator coordinateCalculator = new CoordinateCalculator();
 
-        IMapElementBuilder mapElementFactory = null;
+        IMapElementBuilder mapElementFactory = new MapElementBuilder();
         IMapElementsGenerator mapElementsGenerator = null;
 
         IMapConfigurationValidator mapConfigValidator = null;
@@ -32,13 +32,13 @@ internal class Program
 
         Console.WriteLine("Mars maps successfully generated.");
 
-        string filePath = WorkDir + "map.txt";
-        IMapFileWriter mapFileWriter = new MapFileWriter();
-        string?[,] representation = new string?[3, 3];
-        bool successfullyGenerated = true;
-        Map map = new Map(representation, successfullyGenerated);
-          mapFileWriter.WriteMapFile(map, filePath);
-        Console.WriteLine("Map file created succesfully.");
+        // string filePath = WorkDir + "map.txt";
+        // IMapFileWriter mapFileWriter = new MapFileWriter();
+        // string?[,] representation = new string?[3, 3];
+        // bool successfullyGenerated = true;
+        // Map map = new Map(representation, successfullyGenerated);
+        //   mapFileWriter.WriteMapFile(map, filePath);
+        // Console.WriteLine("Map file created succesfully.");
 
         Console.ReadKey();
     }

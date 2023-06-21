@@ -26,7 +26,7 @@ internal class Program
         IMapConfigurationValidator mapConfigValidator = new MapConfigurationValidator();
         IMapElementPlacer mapElementPlacer = new MapElementPlacer();
 
-        IMapGenerator mapGenerator = new MapGenerator(dimensionCalculator, mapElementsGenerator, mapElementPlacer);
+        IMapGenerator mapGenerator = new MapGenerator(dimensionCalculator, mapElementsGenerator, mapElementPlacer, coordinateCalculator);
         IMapFileWriter mapFileWriter = new MapFileWriter();
 
         if (mapConfigValidator.Validate(mapConfig))

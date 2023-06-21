@@ -11,14 +11,35 @@ public class MapGenerator : IMapGenerator
     private readonly IDimensionCalculator _dimensionCalculator;
     private readonly IMapElementsGenerator _mapElementsGenerator;
     private readonly IMapElementPlacer _mapElementPlacer;
+    private readonly ICoordinateCalculator _coordinateCalculator;
+    private static Random random = new Random();
 
-    public MapGenerator(IDimensionCalculator dimensionCalculator, IMapElementsGenerator mapElementsGenerator, IMapElementPlacer mapElementPlacer)
+    public MapGenerator(IDimensionCalculator dimensionCalculator, IMapElementsGenerator mapElementsGenerator, IMapElementPlacer mapElementPlacer, ICoordinateCalculator coordinateCalculator)
     {
         _dimensionCalculator = dimensionCalculator;
         _mapElementsGenerator = mapElementsGenerator;
         _mapElementPlacer = mapElementPlacer;
+        _coordinateCalculator = coordinateCalculator;
     }
-    
+
+    private List<Coordinate> GetPreferredLocationCoordinates(string?[,] map, string symbol)
+    {
+        List<Coordinate> preferredCoordinates = new List<Coordinate>();
+        
+        for (int y = 0; y < map.GetLength(0); y++)
+        {
+            for (int x = 0; x < map.GetLength(1); x++)
+            {
+                if (map[y, x] == symbol)
+                {
+                    preferredCoordinates.Add(new Coordinate(x,y));
+                }
+            }
+        }
+
+        return preferredCoordinates;
+    }
+
     public Map Generate(MapConfiguration mapConfig)
     {
         int mapDimension = _dimensionCalculator.CalculateDimension(mapConfig.MapSize, 0);
@@ -32,25 +53,86 @@ public class MapGenerator : IMapGenerator
         {
             MapElement elementToPlace = allElementsToPlace.OrderBy(element => element.Dimension).Last();
             int elementDimension = elementToPlace.Dimension;
-            for (int y = 0; y <= mapDimension - elementDimension + 1; y++)
+            if (elementToPlace.PreferredLocationSymbol == null)
             {
-                for (int x = 0; x <= mapDimension - elementDimension + 1; x++)
+              for (int y = 0; y <= mapDimension - elementDimension + 1; y++)
+              { 
+                  for (int x = 0; x <= mapDimension - elementDimension + 1; x++) 
+                  { 
+                      Coordinate topLeftCornerOfElement = new Coordinate(x, y); 
+                      if (_mapElementPlacer.CanPlaceElement(elementToPlace, mapRepresentation, topLeftCornerOfElement)) 
+                      { 
+                          _mapElementPlacer.PlaceElement(elementToPlace, mapRepresentation, topLeftCornerOfElement); 
+                          //allElementsToPlace.Remove(elementToPlace);
+                          //isElementPlaced = true;
+                          //elementIndexToRemove = allElementsToPlace.IndexOf(elementToPlace);
+                          break;
+                      }
+                                  
+                  } 
+                  if (isElementPlaced) 
+                  { 
+                      break;
+                  }
+              }  
+            }
+            else if (elementToPlace.Name == "water")
+            {
+                List<Coordinate> adjacentLocations = (List<Coordinate>)_coordinateCalculator.GetAdjacentCoordinates(GetPreferredLocationCoordinates(mapRepresentation, "&"), mapDimension);
+                foreach (Coordinate adjacentCoordinate in adjacentLocations)
                 {
-                    Coordinate topLeftCornerOfElement = new Coordinate(x, y);
-                    if (_mapElementPlacer.CanPlaceElement(elementToPlace, mapRepresentation, topLeftCornerOfElement))
+                    if (mapRepresentation[adjacentCoordinate.Y, adjacentCoordinate.X] != null)
                     {
-                        _mapElementPlacer.PlaceElement(elementToPlace, mapRepresentation, topLeftCornerOfElement);
-                        //allElementsToPlace.Remove(elementToPlace);
-                        isElementPlaced = true;
-                        //elementIndexToRemove = allElementsToPlace.IndexOf(elementToPlace);
-                        break;
+                        adjacentLocations.Remove(adjacentCoordinate);
                     }
+                }
+                if (adjacentLocations.Count > 0)
+                {
+                    int indexOfCoordinate = random.Next(0, adjacentLocations.Count);
+                    mapRepresentation[adjacentLocations[indexOfCoordinate].Y, adjacentLocations[indexOfCoordinate].X] =
+                        "*";
                     
                 }
-                if (isElementPlaced)
+                else
                 {
-                    break;
+                    Coordinate randomCoordinate = new Coordinate(random.Next(0, mapDimension),random.Next(0, mapDimension));
+                    while (mapRepresentation[randomCoordinate.Y, randomCoordinate.X] != null)
+                    {
+                        randomCoordinate = new Coordinate(random.Next(0, mapDimension),random.Next(0, mapDimension));
+                    }
+
+                    mapRepresentation[randomCoordinate.Y, randomCoordinate.X] = "*";
                 }
+
+                isElementPlaced = true;
+            } else if (elementToPlace.Name == "mineral")
+            {
+                List<Coordinate> adjacentLocations = (List<Coordinate>)_coordinateCalculator.GetAdjacentCoordinates(GetPreferredLocationCoordinates(mapRepresentation, "#"), mapDimension);
+                foreach (Coordinate adjacentCoordinate in adjacentLocations)
+                {
+                    if (mapRepresentation[adjacentCoordinate.Y, adjacentCoordinate.X] != null)
+                    {
+                        adjacentLocations.Remove(adjacentCoordinate);
+                    }
+                }
+                if (adjacentLocations.Count > 0)
+                {
+                    int indexOfCoordinate = random.Next(0, adjacentLocations.Count);
+                    mapRepresentation[adjacentLocations[indexOfCoordinate].Y, adjacentLocations[indexOfCoordinate].X] =
+                        "%";
+                }
+                else
+                {
+                    Coordinate randomCoordinate = new Coordinate(random.Next(0, mapDimension),random.Next(0, mapDimension));
+                    while (mapRepresentation[randomCoordinate.Y, randomCoordinate.X] != null)
+                    {
+                        randomCoordinate = new Coordinate(random.Next(0, mapDimension),random.Next(0, mapDimension));
+                    }
+
+                    mapRepresentation[randomCoordinate.Y, randomCoordinate.X] = "%"; 
+                }
+
+                isElementPlaced = true;
             }
             if (isElementPlaced)
             {

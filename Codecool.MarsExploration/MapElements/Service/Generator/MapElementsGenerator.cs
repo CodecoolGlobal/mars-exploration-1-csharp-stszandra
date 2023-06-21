@@ -22,8 +22,9 @@ public class MapElementsGenerator : IMapElementsGenerator
             var elementConfigs = mapElementConfig.ElementsToDimensions;
             foreach (ElementToSize config in elementConfigs)
             {
+                int count = config.ElementCount;
                 int size = config.Size;
-                for (int i = 1; i <= size; i++)
+                for (int i = 1; i <= count; i++)
                 {
                     mapElements.Add(_mapElementBuilder.Build(size, mapElementConfig.Symbol, mapElementConfig.Name,
                         mapElementConfig.DimensionGrowth, mapElementConfig.PreferredLocationSymbol));

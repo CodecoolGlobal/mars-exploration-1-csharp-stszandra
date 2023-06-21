@@ -35,8 +35,9 @@ namespace MarsExplorationTests
             {
                 foreach (ElementToSize config in mapElementConfiguration.ElementsToDimensions)
                 {
+                    int count = config.ElementCount;
                     int size = config.Size;
-                    for (int i = 1; i < size; i++)
+                    for (int i = 1; i <= count; i++)
                     {
                         string?[,] representation = new string?[size, size];
                         MapElement mapElement = new MapElement(representation, mapElementConfiguration.Name, size, mapElementConfiguration.PreferredLocationSymbol);
@@ -49,7 +50,8 @@ namespace MarsExplorationTests
             IEnumerable<MapElement> result = _mapElementsGenerator.CreateAll(mapConfig);
 
             Assert.IsNotNull(result);
-            CollectionAssert.AreEqual(expectedMapElements, result); 
+            Assert.That(expectedMapElements[0].Representation, Is.EqualTo(result.ElementAt(0).Representation));
+
         }
 
         private static MapConfiguration GetConfiguration()

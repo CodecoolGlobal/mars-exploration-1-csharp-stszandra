@@ -23,14 +23,20 @@ internal class Program
         IMapElementBuilder mapElementFactory = new MapElementBuilder(dimensionCalculator, coordinateCalculator);
         IMapElementsGenerator mapElementsGenerator = new MapElementsGenerator(mapElementFactory);
 
-        IMapConfigurationValidator mapConfigValidator = null;
-        IMapElementPlacer mapElementPlacer = null;
+        IMapConfigurationValidator mapConfigValidator = new MapConfigurationValidator();
+        IMapElementPlacer mapElementPlacer = new MapElementPlacer();
 
-        IMapGenerator mapGenerator = null;
+        IMapGenerator mapGenerator = new MapGenerator(dimensionCalculator, mapElementsGenerator, mapElementPlacer);
 
-        CreateAndWriteMaps(3, mapGenerator, mapConfig);
-
-        Console.WriteLine("Mars maps successfully generated.");
+        if (mapConfigValidator.Validate(mapConfig))
+        {
+            CreateAndWriteMaps(3, mapGenerator, mapConfig);
+            Console.WriteLine("Mars maps successfully generated.");
+        } else
+        {
+            Console.WriteLine("Map Configuration was invalid!\nMaps couldn't be created");
+        }
+        
 
         // string filePath = WorkDir + "map.txt";
         // IMapFileWriter mapFileWriter = new MapFileWriter();

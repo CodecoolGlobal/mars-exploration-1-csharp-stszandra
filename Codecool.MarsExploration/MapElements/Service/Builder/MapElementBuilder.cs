@@ -21,38 +21,16 @@ public class MapElementBuilder : IMapElementBuilder
         string?[,] representation = new string?[dimension, dimension];
         for (int i = 1; i <= size; i++)
         {
-            if (preferredLocationSymbol == null)
+            Coordinate coordinate = _coordinateCalculator.GetRandomCoordinate(dimension);
+            while (representation[coordinate.X, coordinate.Y] != null)
             {
-                Coordinate coordinate = _coordinateCalculator.GetRandomCoordinate(dimension);
-                while (representation[coordinate.X, coordinate.Y] != null)
-                {
-                    coordinate = _coordinateCalculator.GetRandomCoordinate(dimension);
-                }
-
-                representation[coordinate.X, coordinate.Y] = symbol;
-            } else
-            {
-                List<Coordinate> preferredLocationCoordinates = new List<Coordinate>();
-                
-                _coordinateCalculator.GetAdjacentCoordinates(preferredLocationCoordinates, dimension);
+                coordinate = _coordinateCalculator.GetRandomCoordinate(dimension);
             }
+        
+            representation[coordinate.X, coordinate.Y] = symbol;
         }
 
         MapElement mapElement = new MapElement(representation, name, dimension, preferredLocationSymbol);
         return mapElement;
-    }
-
-    private IEnumerable<Coordinate> GetPreferredLocationCoordinates(int dimension)
-    {
-        for (int y = 0; y < dimension; y++)
-        {
-            for (int x = 0; x < dimension; x++)
-            {
-                if ()
-                {
-                    
-                }
-            }
-        }
     }
 }

@@ -54,7 +54,7 @@ internal class Program
     {
         for (int i = 1; i <= count; i++)
         {
-            mapFileWriter.WriteMapFile(mapGenerator.Generate(mapConfig), $"Maps/map{i}");
+            mapFileWriter.WriteMapFile(mapGenerator.Generate(mapConfig), $"Maps/map{i}.txt");
         }
     }
 

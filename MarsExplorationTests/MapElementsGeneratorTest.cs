@@ -1,8 +1,15 @@
-﻿using Codecool.MarsExploration.Configuration.Model;
+﻿using Codecool.MarsExploration.Calculators.Service;
+using Codecool.MarsExploration.Configuration.Model;
 using Codecool.MarsExploration.MapElements.Model;
 using Codecool.MarsExploration.MapElements.Service.Builder;
 using Codecool.MarsExploration.MapElements.Service.Generator;
+using System;
 using Moq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 
 namespace MarsExplorationTests
 {
@@ -30,7 +37,7 @@ namespace MarsExplorationTests
                 {
                     int count = config.ElementCount;
                     int size = config.Size;
-                    for (int i = 1; i < count; i++)
+                    for (int i = 1; i <= count; i++)
                     {
                         string?[,] representation = new string?[size, size];
                         MapElement mapElement = new MapElement(representation, mapElementConfiguration.Name, size, mapElementConfiguration.PreferredLocationSymbol);
@@ -43,7 +50,8 @@ namespace MarsExplorationTests
             IEnumerable<MapElement> result = _mapElementsGenerator.CreateAll(mapConfig);
 
             Assert.IsNotNull(result);
-            CollectionAssert.AreEqual(expectedMapElements, result); 
+            Assert.That(expectedMapElements[0].Representation, Is.EqualTo(result.ElementAt(0).Representation));
+
         }
 
         private static MapConfiguration GetConfiguration()

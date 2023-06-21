@@ -23,6 +23,20 @@ public class MapElementPlacer : IMapElementPlacer
 
     public void PlaceElement(MapElement element, string?[,] map, Coordinate coordinate)
     {
-        
+        string?[,] elementsToPlace = element.Representation;
+        int dimension = element.Dimension;
+        int topLeftCornerOfDimensionY = coordinate.Y;
+        int topLeftCornerOfDimensionX = coordinate.X;
+        //We iterate over the map's segment where the dimension is.
+        for (int y = topLeftCornerOfDimensionY; y < topLeftCornerOfDimensionY + dimension; y++)
+        {
+            for (int x = topLeftCornerOfDimensionX; x < topLeftCornerOfDimensionX + dimension; x++)
+            {
+                if (elementsToPlace[y - topLeftCornerOfDimensionY, x - topLeftCornerOfDimensionX] != null)
+                {
+                    map[y, x] = elementsToPlace[y - topLeftCornerOfDimensionY, x - topLeftCornerOfDimensionX];
+                }
+            }
+        }
     }
 }

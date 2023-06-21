@@ -1,15 +1,8 @@
-﻿using Codecool.MarsExploration.Calculators.Service;
-using Codecool.MarsExploration.Configuration.Model;
+﻿using Codecool.MarsExploration.Configuration.Model;
 using Codecool.MarsExploration.MapElements.Model;
 using Codecool.MarsExploration.MapElements.Service.Builder;
 using Codecool.MarsExploration.MapElements.Service.Generator;
-using System;
 using Moq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace MarsExplorationTests
 {
@@ -35,8 +28,9 @@ namespace MarsExplorationTests
             {
                 foreach (ElementToSize config in mapElementConfiguration.ElementsToDimensions)
                 {
+                    int count = config.ElementCount;
                     int size = config.Size;
-                    for (int i = 1; i < size; i++)
+                    for (int i = 1; i < count; i++)
                     {
                         string?[,] representation = new string?[size, size];
                         MapElement mapElement = new MapElement(representation, mapElementConfiguration.Name, size, mapElementConfiguration.PreferredLocationSymbol);

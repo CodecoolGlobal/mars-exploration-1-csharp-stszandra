@@ -28,9 +28,9 @@ public class MapElementPlacer : IMapElementPlacer
         int topLeftCornerOfDimensionY = coordinate.Y;
         int topLeftCornerOfDimensionX = coordinate.X;
         //We iterate over the map's segment where the dimension is.
-        for (int y = topLeftCornerOfDimensionY; y < topLeftCornerOfDimensionY + dimension; y++)
+        for (int y = topLeftCornerOfDimensionY; y < topLeftCornerOfDimensionY + dimension - 1; y++)
         {
-            for (int x = topLeftCornerOfDimensionX; x < topLeftCornerOfDimensionX + dimension; x++)
+            for (int x = topLeftCornerOfDimensionX; x < topLeftCornerOfDimensionX + dimension - 1; x++)
             {
                 if (elementsToPlace[y - topLeftCornerOfDimensionY, x - topLeftCornerOfDimensionX] != null)
                 {

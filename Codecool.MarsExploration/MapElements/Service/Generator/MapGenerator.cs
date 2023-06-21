@@ -26,6 +26,8 @@ public class MapGenerator : IMapGenerator
         
         List<MapElement> allElementsToPlace = (List<MapElement>)_mapElementsGenerator.CreateAll(mapConfig);
         bool isElementPlaced = false;
+        //int elementIndexToRemove = -1;
+        
         while (allElementsToPlace.Count > 0)
         {
             MapElement elementToPlace = allElementsToPlace.OrderBy(element => element.Dimension).Last();
@@ -38,8 +40,9 @@ public class MapGenerator : IMapGenerator
                     if (_mapElementPlacer.CanPlaceElement(elementToPlace, mapRepresentation, topLeftCornerOfElement))
                     {
                         _mapElementPlacer.PlaceElement(elementToPlace, mapRepresentation, topLeftCornerOfElement);
-                        allElementsToPlace.Remove(elementToPlace);
+                        //allElementsToPlace.Remove(elementToPlace);
                         isElementPlaced = true;
+                        //elementIndexToRemove = allElementsToPlace.IndexOf(elementToPlace);
                         break;
                     }
                     
@@ -48,6 +51,13 @@ public class MapGenerator : IMapGenerator
                 {
                     break;
                 }
+            }
+            if (isElementPlaced)
+            {
+                //allElementsToPlace.RemoveAt(elementIndexToRemove);
+                allElementsToPlace.Remove(elementToPlace);
+                isElementPlaced = false;
+                //elementIndexToRemove = -1;
             }
         }
         Map map = new Map(mapRepresentation);

@@ -11,8 +11,6 @@ public class MapGenerator : IMapGenerator
     private readonly IDimensionCalculator _dimensionCalculator;
     private readonly IMapElementsGenerator _mapElementsGenerator;
     private readonly IMapElementPlacer _mapElementPlacer;
-    private readonly ICoordinateCalculator _coordinateCalculator;
-    private static Random random = new Random();
 
     public MapGenerator(IDimensionCalculator dimensionCalculator, IMapElementsGenerator mapElementsGenerator, IMapElementPlacer mapElementPlacer, ICoordinateCalculator coordinateCalculator)
     {

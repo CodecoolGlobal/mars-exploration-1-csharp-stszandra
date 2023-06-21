@@ -20,8 +20,8 @@ internal class Program
         IDimensionCalculator dimensionCalculator = new DimensionCalculator();
         ICoordinateCalculator coordinateCalculator = new CoordinateCalculator();
 
-        IMapElementBuilder mapElementFactory = new MapElementBuilder();
-        IMapElementsGenerator mapElementsGenerator = null;
+        IMapElementBuilder mapElementFactory = new MapElementBuilder(dimensionCalculator, coordinateCalculator);
+        IMapElementsGenerator mapElementsGenerator = new MapElementsGenerator(mapElementFactory);
 
         IMapConfigurationValidator mapConfigValidator = null;
         IMapElementPlacer mapElementPlacer = null;

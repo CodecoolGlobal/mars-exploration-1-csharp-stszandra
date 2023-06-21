@@ -27,10 +27,11 @@ internal class Program
         IMapElementPlacer mapElementPlacer = new MapElementPlacer();
 
         IMapGenerator mapGenerator = new MapGenerator(dimensionCalculator, mapElementsGenerator, mapElementPlacer);
+        IMapFileWriter mapFileWriter = new MapFileWriter();
 
         if (mapConfigValidator.Validate(mapConfig))
         {
-            CreateAndWriteMaps(3, mapGenerator, mapConfig);
+            CreateAndWriteMaps(3, mapGenerator, mapConfig, mapFileWriter);
             Console.WriteLine("Mars maps successfully generated.");
         } else
         {
@@ -49,8 +50,12 @@ internal class Program
         Console.ReadKey();
     }
 
-    private static void CreateAndWriteMaps(int count, IMapGenerator mapGenerator, MapConfiguration mapConfig)
+    private static void CreateAndWriteMaps(int count, IMapGenerator mapGenerator, MapConfiguration mapConfig, IMapFileWriter mapFileWriter)
     {
+        for (int i = 1; i <= count; i++)
+        {
+            mapFileWriter.WriteMapFile(mapGenerator.Generate(mapConfig), $"Maps/map{i}");
+        }
     }
 
     private static MapConfiguration GetConfiguration()

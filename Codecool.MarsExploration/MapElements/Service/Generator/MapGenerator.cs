@@ -25,14 +25,14 @@ public class MapGenerator : IMapGenerator
     private List<Coordinate> GetPreferredLocationCoordinates(string?[,] map, string symbol)
     {
         List<Coordinate> preferredCoordinates = new List<Coordinate>();
-        
+
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
                 if (map[y, x] == symbol)
                 {
-                    preferredCoordinates.Add(new Coordinate(x,y));
+                    preferredCoordinates.Add(new Coordinate(x, y));
                 }
             }
         }
@@ -44,11 +44,11 @@ public class MapGenerator : IMapGenerator
     {
         int mapDimension = _dimensionCalculator.CalculateDimension(mapConfig.MapSize, 0);
         string?[,] mapRepresentation = new string?[mapDimension, mapDimension];
-        
+
         List<MapElement> allElementsToPlace = (List<MapElement>)_mapElementsGenerator.CreateAll(mapConfig);
         bool isElementPlaced = false;
         //int elementIndexToRemove = -1;
-        
+
         while (allElementsToPlace.Count > 0)
         {
             MapElement elementToPlace = allElementsToPlace.OrderBy(element => element.Dimension).Last();
@@ -56,25 +56,25 @@ public class MapGenerator : IMapGenerator
             if (elementToPlace.PreferredLocationSymbol == null)
             {
                 for (int y = 0; y <= mapDimension - elementDimension + 1; y++)
-                { 
-                  for (int x = 0; x <= mapDimension - elementDimension + 1; x++) 
-                  { 
-                      Coordinate topLeftCornerOfElement = new Coordinate(x, y); 
-                      if (_mapElementPlacer.CanPlaceElement(elementToPlace, mapRepresentation, topLeftCornerOfElement)) 
-                      { 
-                          _mapElementPlacer.PlaceElement(elementToPlace, mapRepresentation, topLeftCornerOfElement); 
-                          //allElementsToPlace.Remove(elementToPlace);
-                          isElementPlaced = true;
-                          //elementIndexToRemove = allElementsToPlace.IndexOf(elementToPlace);
-                          break;
-                      }
-                                  
-                  } 
-                  if (isElementPlaced) 
-                  { 
-                      break;
-                  }
-                }  
+                {
+                    for (int x = 0; x <= mapDimension - elementDimension + 1; x++)
+                    {
+                        Coordinate topLeftCornerOfElement = new Coordinate(x, y);
+                        if (_mapElementPlacer.CanPlaceElement(elementToPlace, mapRepresentation, topLeftCornerOfElement))
+                        {
+                            _mapElementPlacer.PlaceElement(elementToPlace, mapRepresentation, topLeftCornerOfElement);
+                            //allElementsToPlace.Remove(elementToPlace);
+                            isElementPlaced = true;
+                            //elementIndexToRemove = allElementsToPlace.IndexOf(elementToPlace);
+                            break;
+                        }
+
+                    }
+                    if (isElementPlaced)
+                    {
+                        break;
+                    }
+                }
             }
             else if (elementToPlace.Name == "water")
             {
@@ -88,16 +88,17 @@ public class MapGenerator : IMapGenerator
                 }
                 else
                 {
-                    Coordinate randomCoordinate = new Coordinate(random.Next(0, mapDimension),random.Next(0, mapDimension));
+                    Coordinate randomCoordinate = new Coordinate(random.Next(0, mapDimension), random.Next(0, mapDimension));
                     while (mapRepresentation[randomCoordinate.Y, randomCoordinate.X] != null)
                     {
-                        randomCoordinate = new Coordinate(random.Next(0, mapDimension),random.Next(0, mapDimension));
+                        randomCoordinate = new Coordinate(random.Next(0, mapDimension), random.Next(0, mapDimension));
                     }
                     mapRepresentation[randomCoordinate.Y, randomCoordinate.X] = "*";
                 }
 
                 isElementPlaced = true;
-            } else if (elementToPlace.Name == "mineral")
+            }
+            else if (elementToPlace.Name == "mineral")
             {
                 List<Coordinate> adjacentLocations = (List<Coordinate>)_coordinateCalculator.GetAdjacentCoordinates(GetPreferredLocationCoordinates(mapRepresentation, "#"), mapDimension);
                 List<Coordinate> emptyAdjacentLocations = adjacentLocations.Where(location => mapRepresentation[location.Y, location.X] == null).ToList();
@@ -109,12 +110,12 @@ public class MapGenerator : IMapGenerator
                 }
                 else
                 {
-                    Coordinate randomCoordinate = new Coordinate(random.Next(0, mapDimension),random.Next(0, mapDimension));
+                    Coordinate randomCoordinate = new Coordinate(random.Next(0, mapDimension), random.Next(0, mapDimension));
                     while (mapRepresentation[randomCoordinate.Y, randomCoordinate.X] != null)
                     {
-                        randomCoordinate = new Coordinate(random.Next(0, mapDimension),random.Next(0, mapDimension));
+                        randomCoordinate = new Coordinate(random.Next(0, mapDimension), random.Next(0, mapDimension));
                     }
-                    mapRepresentation[randomCoordinate.Y, randomCoordinate.X] = "%"; 
+                    mapRepresentation[randomCoordinate.Y, randomCoordinate.X] = "%";
                 }
 
                 isElementPlaced = true;
@@ -133,6 +134,6 @@ public class MapGenerator : IMapGenerator
 
     private void PlaceSingleElement()
     {
-        
+
     }
 }

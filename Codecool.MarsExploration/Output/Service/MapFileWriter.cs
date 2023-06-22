@@ -16,7 +16,7 @@ namespace Codecool.MarsExploration.Output.Service
             {
                 using StreamWriter writer = File.CreateText(file);
                 writer.WriteLine(map);
-                Console.WriteLine($"File succesfully written to file: {file}\n");
+                Console.WriteLine($"File successfully written to file: {file}\n");
             }
             catch (IOException exception)
             {

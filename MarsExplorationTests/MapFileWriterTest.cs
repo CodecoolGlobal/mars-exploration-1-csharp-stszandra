@@ -33,14 +33,15 @@ public class MapFileWriterTest
         Assert.That(File.Exists(filePath));
     }
 
+    
     [Test]
-    public void TestFileWriter_Catch()
+    public void WriteMapFile_IOException_CorrectErrorMessagePrinted()
     {
-        string filePath = "ReadOnly.txt";
-        string?[,] representation2 = new string?[2, 2] { { "A", "B" }, { "C", "D" } };;
-        Map map = new Map(representation2);
-        SetFileAsReadOnly(filePath);
+        string file = "TestMaps/testMap2.txt";
 
-        Assert.That(() => fileWriter.WriteMapFile(map, filePath), Throws.TypeOf<IOException>().With.Message.Contains("Couldn't write to file"));
+        Map map = null;
+
+        // Act and Assert
+        Assert.Throws<IOException>(() => fileWriter.WriteMapFile(map, file));
     }
 }

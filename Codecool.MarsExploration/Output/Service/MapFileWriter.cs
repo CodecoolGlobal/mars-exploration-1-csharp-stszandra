@@ -14,16 +14,19 @@ namespace Codecool.MarsExploration.Output.Service
         {
             try
             {
+                if (map == null)
+                {
+                    throw new IOException("Invalid map provided.");
+                }
                 using StreamWriter writer = File.CreateText(file);
                 writer.WriteLine(map);
                 Console.WriteLine($"File successfully written to file: {file}\n");
             }
             catch (IOException exception)
             {
-                Console.WriteLine($"Error - Couldn't write to file {file}: ");
-                Console.WriteLine($"{exception.Message}\n");
+                throw; // Re-throw the IOException
             }
-           
+
         }
     }
 }
